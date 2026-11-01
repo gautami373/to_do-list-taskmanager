@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About TaskFlow</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>About TaskFlow</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+        </nav>
+    </header>
+
+    <main class="about-section">
+
+        <h2>Project Overview</h2>
+
+        <p>
+            TaskFlow is a simple web-based To-Do List and Task Manager
+            developed using Python and Flask.
+        </p>
+
+        <h2>Objectives</h2>
+
+        <ul>
+            <li>Add and manage tasks.</li>
+            <li>View pending and completed tasks.</li>
+            <li>Mark tasks as completed.</li>
+            <li>Delete unwanted tasks.</li>
+            <li>Track task statistics.</li>
+        </ul>
+
+        <h2>Technologies Used</h2>
+
+        <ul>
+            <li>Python</li>
+            <li>Flask</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Jinja2</li>
+        </ul>
+
+        <a href="{{ url_for('home') }}">Back to Home</a>
+
+    </main>
+
+</body>
+</html>

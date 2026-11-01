@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow - Task Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>TaskFlow</h1>
+        <p>Your personal To-Do List & Task Manager</p>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="statistics">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <p>{{ total_tasks }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <p>{{ pending_tasks }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <p>{{ completed_tasks }}</p>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h2>Add a New Task</h2>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <form action="{{ url_for('add_task') }}" method="POST">
+
+                <label for="title">Task Title *</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter your task"
+                    required
+                >
+
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Enter task details (optional)"
+                ></textarea>
+
+                <button type="submit">Add Task</button>
+
+            </form>
+        </section>
+
+        <section class="tasks-section">
+            <h2>My Tasks</h2>
+
+            {% if tasks %}
+
+                {% for task in tasks %}
+
+                    <div class="task-card">
+
+                        <div>
+                            <h3 class="{% if task.completed %}completed{% endif %}">
+                                {{ task.title }}
+                            </h3>
+
+                            <p>{{ task.description }}</p>
+
+                            <span>
+                                Status:
+                                {% if task.completed %}
+                                    Completed
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="task-actions">
+
+                            <form
+                                action="{{ url_for('complete_task', task_id=task.id) }}"
+                                method="POST"
+                            >
+                                <button type="submit">
+                                    {% if task.completed %}
+                                        Mark Pending
+                                    {% else %}
+                                        Complete
+                                    {% endif %}
+                                </button>
+                            </form>
+
+                            <form
+                                action="{{ url_for('delete_task', task_id=task.id) }}"
+                                method="POST"
+                            >
+                                <button type="submit" class="delete-button">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-message">
+                    No tasks yet. Add your first task above!
+                </p>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>TaskFlow | Python Flask Mini Project</p>
+    </footer>
+
+</body>
+</html>
